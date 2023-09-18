@@ -1,0 +1,42 @@
+# dockerのプロキシ設定
+cat proxy.conf
+
+#dockerの再起動
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+sudo systemctl status docker
+#sudoをつけなくても動くように
+docker info | grep Proxy
+docker run hello-world
+#動作確認するとイメージ化できてコンテナができる　壊すときはコンテナから壊す
+#確認コマンド
+docker container ls -a
+docker ps -a
+#削除
+docker container rm [CONTAINER ID or NAMES]
+#確認
+docker image -ls
+#削除
+docker image rm [IMAGE_ID]
+#dockerストップ
+sudo systemctl stop docker
+
+docker run -itd --gpus all --name example -e http_proxy=... nvidia/cuda:10.0-cudnn7-deval-ubuntu20.04
+#dockerの中に入る
+docker exec -it exaple /bin/bash
+#python関係をインストール　pipが使えるように
+apt-get update && apt-get install -y --no-install-recommends python3-pip python3-setuptools
+
+python -m pip install --proxy="..." tensorflow-gpu==2.8
+
+#ホストのディレクトリと共有できるようにコンテナを作成
+docker run -itd --gpus all --name example　-v /home/ubuntu/:/home/test -e http_proxy=... nvidia/cuda:10.0-cudnn7-deval-ubuntu20.04
+
+ubuntuから共有ファイルサーバにあるフォルダをマウント
+sudo apt install cifs-utils
+cd /mnt
+sudo mkdir share
+sudo mount -t cifs //172.o.o.o/23s/23S/mnt/share -o user=  ,domain=ccit
+
+コンテナ上でpythonファイル実行
+python3 test.py --gpu_id 0 --base_model_name "DRAEM_test_0.0001_700_bs8" --data_path ./mvtec/ --checkpoint_path ./checkpoints/

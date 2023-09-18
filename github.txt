@@ -1,0 +1,12 @@
+#cmd上で作成した開発コードがあるディレクトリに移動する
+#githubにつなげる
+git init
+#ディレクトリを加える
+git add .
+#コミットする
+git commit -m 'comment'
+#ディレクトリをpushする
+git remote add origin githubのURL
+#push
+git push origin main
+#最後のmainは設定によってmasterの場合もある
